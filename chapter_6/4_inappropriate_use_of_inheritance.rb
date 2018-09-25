@@ -19,3 +19,8 @@ mountain_bike = MountainBike.new(
   front_shock: 'Manitou',
   rear_shock:  'Fox' )
 puts mountain_bike.spares
+
+=begin
+設計は進化するもの。
+この状況（親クラスにしようとするクラスが、具象クラスの振る舞いまで持ってしまっている）は常に発生する。
+=end
