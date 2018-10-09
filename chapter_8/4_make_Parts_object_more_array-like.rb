@@ -55,3 +55,34 @@ sizeだけが必要　　　　　　→  解決策① sizeを実装する
 混乱するエラーが起きてもいい、
 もしくは遭遇しない　　　　→  解決策② Arrayのサブクラスにする
 =end
+
+# 中間の選択肢
+require 'forwardable'
+class Parts
+  extend Forwardable
+  def_delegators :@parts, :size, :each
+  include Enumerable
+
+  def initialize(parts)
+    @parts = parts
+  end
+
+  def spares
+    select {|part| part.needs_spare}
+  end
+end
+=begin
+module Enumerable：
+繰り返しを行なうクラスのための Mix-in。このモジュールの メソッドは全て each を用いて定義されているので、インクルード するクラスには each が定義されていなければなりません。
+
+def_delegators <- 第一引数に委譲先のオブジェクト、それ以降の引数で委譲したいメソッド名
+
+=> ！Partsがeachを実装していないのにEnumerableモジュールのメソッドを呼び出せるのは、eachを@partsに委譲しているから。
+
+Arrayの継承リスト：
+Array < Enumerable < Object < Kernel < BasicObject 
+
+「+」メソッドを呼ぶとNoMthodError例外が起きる　<- 「+」はArrayのメソッドで、Enumerableモジュールには定義されていないから
+
+=> Partsはsize、each、Enumerableのすべてに応答するようになり、Arrayとして扱った時のみエラーが発生する。
+=end
