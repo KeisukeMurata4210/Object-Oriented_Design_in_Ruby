@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../codes/1-1.rb'
+require '../codes/1-2.rb'
 
 class WheelTest < MiniTest::Unit::TestCase
   def test_calculates_diameter
@@ -15,13 +15,10 @@ class GearTest < MiniTest::Unit::TestCase
     gear = Gear.new(
             chainring: 52,
             cog:       11,
-            rim:       26,
-            tire:      1.5)
+            wheel:     Wheel.new(26, 1.5))
     
     assert_in_delta(137.1,   
                     gear.gear_inches,
                     0.01)
-    # gear_inches()がWheelを作成するが、テストコードからは分からない
-    # ①テスト実行時間が長くなる。②Wheelが壊れているor変更される場合、このテストも壊れてしまう
   end
 end
