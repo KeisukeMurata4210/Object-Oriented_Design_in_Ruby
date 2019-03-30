@@ -18,8 +18,8 @@ class MiniTest::Unit::TestCase
   end
 
   def test_notifies_observers_when_chainrings_change
-    @observer.expect(:changed, true, [42, 11])
-    @gear.set_chainring(42)
+    @observer.expect(:changed, true, [42, 11]) # メッセージを受け取ったことだけをチェックする
+    @gear.set_chainring(42)                    # changedメソッドが何をするかは気にせず、Gearは「メッセージを送った」ことだけに責任を持つ
     @observer.verify
   end
 end
