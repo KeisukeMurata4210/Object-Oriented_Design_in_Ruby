@@ -39,12 +39,6 @@ class RoadBike < Bicycle
 	def post_initialize(args)
 		@tape_color = args[:tape_color]
 	end
-=begin                 # initializeを丸ごとスーパークラスに委譲し、特化する必要があるもののみサブクラスにメッセージを送るようにする
-	def initialize(args)
-		@tape_color = args[:tape_color]
-		super(args)
-	end
-=end
 
 	def local_spares
 		{ tape_color: tape_color }
@@ -54,15 +48,6 @@ class RoadBike < Bicycle
 		'23'
 	end
 end
-=begin
-・post_initializeによって、
-　「何を」初期化する必要があるかは責任を持っているが、
-　「いつ」初期化が行われるかには責任がない。 結合度の低減。
-
-・local_sparesによって、
-　RoadBikeは「Bicycleがsparesを実装していること」「sparesがハッシュを返すこと」を知る必要がなくなった。
-　結合度の低減。
-=end
 
 class MountainBike < Bicycle
 	attr_reader :front_shock, :rear_shock
@@ -78,26 +63,5 @@ class MountainBike < Bicycle
 
 	def default_tire_size
 		'2.1'
-	end
-end
-
-# 新しいRecumbentBike
-class RecumbentBike < Bicycle
-	attr_reader :flag
-
-	def post_initialize(args)
-		@flag = args[:flag]
-	end
-
-	def local_spares
-		{ flag: flag }
-	end
-
-	def default_chain
-		'9-speed'
-	end
-
-	def default_tire_size
-		'28'
 	end
 end
